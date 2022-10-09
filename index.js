@@ -1,9 +1,10 @@
 const http = require("http");
 const fs = require("fs");
+const args = require("minimist")(process.argv.slice(2));
 
 let homeContent = "";
 let projectContent = "";
-let registration = "";
+let registrationContent = "";
 
 fs.readFile("home.html", (err, home) => {
   if (err) {
@@ -19,25 +20,23 @@ fs.readFile("project.html", (err, project) => {
   projectContent = project;
 });
 
-fs.readFile("registration.html", (err, registration) => {
+fs.readFile("registration.html", (err, registrationForm) => {
     if (err) {
       throw err;
     }
-    registration = registration;
+    registrationContent = registrationForm;
   });
 
-let args=require("minimist")(process.argv.slice(2));
-http.createServer((request,response) =>{
+http.createServer(function (request,response) {
     let url =request.url
-    response.writeHeader(200,{"Content-type":"text/html"})
-    switch (url)
-    {
-        case "./project":
-            response.write(filecontent)
+    response.writeHeader(200,{"Content-type":"text/html"});
+    switch (url) {
+        case "/project":
+            response.write(projectContent)
             response.end();
             break
-        case "./registration":
-            response.write(reg)
+        case "/registration":
+            response.write(registrationContent)
             response.end();
             break;
         default:
@@ -45,4 +44,5 @@ http.createServer((request,response) =>{
             response.end();
             break;
     }
-}).listen(args["port"]);
+})
+.listen(args["port"]);
