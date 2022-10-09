@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+.name{
+  border-radius: 3px;
+}
+.che{
+  width: 30px;
+}
+
+body {
+  font-family: sans-serif;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.form {
+  
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  width: 600px;
+  height: 500px;
+  box-shadow: 2px 4px 10px gray;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 0.5cm;
+}
+
+
+.title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+div input {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 2px solid #c4c4c4;
+  padding: 0 30px;
+  box-shadow: 2px 2px 4px rgba(32, 5, 5, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+
+}
+    </style>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Validation.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+
+    <title>Form Validation</title>
+  </head>
+  <body>
+    <div class="box">
+      <form class="form">
+        <div>
+          <label for="name">Name</label>
+          <i class="fas fa-user"></i>
+          <input type="text" id="name">
+        </div>
+
+        <!-- /** 
+          * ! Email Input here
+         **/ -->
+
+        <div>
+          <label for="email">Email</label>
+          <i class="far fa-envelope"></i>
+          <input type="email" id="email">
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password">
+        </div>
+        <div >
+          <label for="DOB">DOB</label>
+          <input type="date" id="date">
+        </div>
+        <div>
+          <input type="checkbox" id="che">
+            Accept terms & Conditions
+            <br><br>
+        </div>
+
+        <input type="submit" id="ll" onclick="func()">
+      </form>
+    </div>
+    <table id="11" border ="4" style="margin-left: auto;
+        margin-right: auto;">
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Password</td>
+                <td>Dob</td>
+                <td>Accepted terms?</td>
+            </tr>
+        </table>
+      </body>
+      <script>
+        //localStorage.clear()
+var h1=0;
+  allStorage();
+ function allStorage() {
+     var values = [],
+     keys = Object.keys(localStorage),
+     i = 0;
+     while ( i<keys.length ) {
+     p=localStorage.getItem(keys[i]);
+     //console.log(p)
+     let p1=JSON.parse(p);
+     let a=document.getElementById("11")
+     let d=a.insertRow(h1+1);
+     let d1=d.insertCell(0);
+     let d2=d.insertCell(1);
+     let d3=d.insertCell(2);
+     let d4=d.insertCell(3);
+     let d5=d.insertCell(4);
+     d1.innerHTML=JSON.parse(p1['name'])
+     d2.innerHTML=JSON.parse(p1['email'])
+     d3.innerHTML=JSON.parse(p1['password'])
+     d4.innerHTML=JSON.parse(p1['dob'])
+     d5.innerHTML=JSON.parse(p1['terms'])
+     h1=h1+1;
+     i=i+1;
+     }
+ }
+
+
+
+ function func()
+ {
+     let a=document.getElementById("11")
+     let e1=document.getElementById("name").value;
+     let e2=document.getElementById("email").value;
+     let e3=document.getElementById("password").value;
+     let e41=document.getElementById("date").value;
+     let e5=document.getElementById("che").checked;
+     //console.log(typeof(e2))
+     e4=new Date(e41)
+     let e6=e2.includes("@gmail.com")
+     var month = e4.getMonth();
+     var day=e4.getDate();
+     var today = new Date(); 
+     var age= today.getYear()-e4.getYear();  
+     if (today.getMonth() < month || (today.getMonth() == month && today.getDate() < day)) {
+        age--;
+      }
+      let agg= age>18 && age <55;
+     if(e5==false)
+     {
+        alert("Accept the terms and consitions")
+        document.getElementById("ll").addEventListener("click", function(event){
+            event.preventDefault()
+          });
+          return 1;
+     }
+     if(agg==false)
+     {
+        alert("age should between 18 and 55")
+        document.getElementById("ll").addEventListener("click", function(event){
+            event.preventDefault()
+          });
+          return 1;
+     }
+     if(e6==false)
+     {
+        alert("invalid email")
+        document.getElementById("ll").addEventListener("click", function(event){
+            event.preventDefault()
+          });
+          return 1;
+     }
+     let d=a.insertRow(h1+1);
+     let d1=d.insertCell(0);
+     let d2=d.insertCell(1);
+     let d3=d.insertCell(2);
+     let d4=d.insertCell(3);
+     let d5=d.insertCell(4);
+     d1.innerHTML=e1
+     d2.innerHTML=e2
+     d3.innerHTML=e3
+     d4.innerHTML=e41
+     d5.innerHTML="yes"
+     let g={
+         'name':JSON.stringify(e1),
+         'email':JSON.stringify(e2),
+         'password':JSON.stringify(e3),
+         'dob':JSON.stringify(e41),
+         'terms':JSON.stringify("yes")
+     }
+     localStorage.setItem(e1,JSON.stringify(g));
+     h1=h1+1;
+ }
+      </script>
+</html>
