@@ -26,8 +26,13 @@ fs.readFile("registration.html", (err, registrationForm) => {
     }
     registrationContent = registrationForm;
   });
-
-http.createServer(function (request,response) {
+  
+fs.readFile("home.html", (err, home) => {
+  if (err) {
+    throw err;
+  }
+http
+.createServer(function (request,response) {
     let url =request.url
     response.writeHeader(200,{"Content-type":"text/html"});
     switch (url) {
@@ -46,3 +51,4 @@ http.createServer(function (request,response) {
     }
 })
 .listen(args["port"]);
+});
